@@ -1021,3 +1021,311 @@ int a = 1, b = 2; // declaration, not comma operator
 		</tr>
 	</tbody>
 </table>
+
+## Practice Problems
+
+### 1.
+
+```c
+int x = 5;
+printf("%d", x++ * ++x);
+```
+
+a) 30  
+b) 35  
+c) Undefined behavior  
+d) 36  
+
+**Answer:** c) Undefined behavior  
+**Explanation:** Multiple modifications of `x` without a sequence point (post-increment and pre-increment used together in the same expression) causes undefined behavior.
+
+### 2.
+
+```c
+int a = 10, b = 20;
+printf("%d", a+++b);
+```
+
+a) 30  
+b) 31  
+c) 32  
+d) Compilation error  
+
+**Answer:** b) 31  
+**Explanation:** `a+++b` is parsed as `a++ + b` due to longest match rule and precedence of postfix `++`. So it evaluates to `10 + 20 = 30`, and then `a` becomes `11`.
+
+### 3.
+
+```c
+int x = 2, y = 3;
+printf("%d", x << y + 1);
+```
+
+a) 32  
+b) 16  
+c) 4  
+d) 256  
+
+**Answer:** a) 32  
+**Explanation:** Operator precedence: `+` > `<<`. So `x << (y+1)` → `2 << 4` = `32`.
+
+### 4.
+
+```c
+int a = 5, b = 10;
+printf("%d", a > b ? a : b > a ? b : a);
+```
+
+a) 5  
+b) 10  
+c) Compilation error  
+d) Undefined  
+
+**Answer:** b) 10  
+**Explanation:** Ternary operator is right-associative. Expression is grouped as `a > b ? a : (b > a ? b : a)`. Since `b > a`, it returns `b = 10`.
+
+### 5.
+
+```c
+int a = 1;
+a = a++ + ++a;
+printf("%d", a);
+```
+
+a) 2  
+b) 3  
+c) Undefined behavior  
+d) 4  
+
+**Answer:** c) Undefined behavior  
+**Explanation:** Modifying `a` twice without a sequence point causes undefined behavior.
+
+### 6.
+
+```c
+int a = 3, b = 2;
+printf("%d", a & b);
+```
+
+a) 0  
+b) 1  
+c) 2  
+d) 3  
+
+**Answer:** c) 2  
+**Explanation:** Bitwise AND of `0011 & 0010 = 0010` → `2`.
+
+### 7.
+
+```c
+int a = 5, b = 3;
+printf("%d", a | b);
+```
+
+a) 7  
+b) 6  
+c) 5  
+d) 3  
+
+**Answer:** a) 7  
+**Explanation:** Bitwise OR: `0101 | 0011 = 0111` → `7`.
+
+### 8.
+
+```c
+int x = -5;
+printf("%d", ~x);
+```
+
+a) 4  
+b) 5  
+c) -4  
+d) -6  
+
+**Answer:** a) 4  
+**Explanation:** `~x = -(x+1)` for signed integers. So `~(-5) = -(-5+1) = 4`.
+
+### 9.
+
+```c
+int x = 10;
+printf("%d", x >> 2);
+```
+
+a) 2  
+b) 3  
+c) 4  
+d) 5  
+
+**Answer:** a) 2  
+**Explanation:** Right shift `>> 2` divides by `2^2 = 4`. 10 / 4 = 2 (integer division).
+
+### 10.
+
+```c
+int x = 2, y = 3;
+printf("%d", x << y);
+```
+
+a) 16  
+b) 8  
+c) 4  
+d) 32  
+
+**Answer:** b) 16  
+**Explanation:** Left shift multiplies by `2^y` → `2 << 3 = 16`.
+
+### 11.
+
+```c
+int a = 1, b = 2, c;
+c = a += b *= 3;
+printf("%d", c);
+```
+
+a) 7  
+b) 8  
+c) 9  
+d) 6  
+
+**Answer:** a) 7  
+**Explanation:** Right-to-left associativity of `*=` and `+=`. First `b *= 3` → `b=6`. Then `a += b` → `a=1+6=7`. `c` gets 7.
+
+### 12.
+
+```c
+int a = 1, b = 0;
+printf("%d", a && b || a);
+```
+
+a) 0  
+b) 1  
+c) 2  
+d) Compilation error  
+
+**Answer:** b) 1  
+**Explanation:** `&&` has higher precedence than `||`. Evaluate `a && b` → `1 && 0 = 0`. Then `0 || a` → `0 || 1 = 1`.
+
+### 13.
+
+```c
+int a = 2, b = 3;
+printf("%d", a ^ b);
+```
+
+a) 1  
+b) 0  
+c) 5  
+d) 6  
+
+**Answer:** a) 1  
+**Explanation:** Bitwise XOR: `0010 ^ 0011 = 0001` → 1.
+
+### 14.
+
+```c
+int a = 5;
+printf("%d", (a++, a));
+```
+
+a) 5  
+b) 6  
+c) Undefined  
+d) Compilation error  
+
+**Answer:** b) 6  
+**Explanation:** comma operator evaluates the expressions from left to right
+
+### 15.
+
+```c
+int a = 10;
+int b = a++ + ++a;
+printf("%d", b);
+```
+
+a) 21  
+b) 22  
+c) 20  
+d) Undefined  
+
+**Answer:** d) undefined  
+**Explanation:** Multiple modifications without a sequence point (post-decrement and pre-decrement in same expression) → undefined behavior.
+
+### 16.
+
+```c
+int a = 2;
+printf("%d", a-- - --a);
+```
+
+a) 1  
+b) 2  
+c) 0  
+d) Undefined  
+
+**Answer:** d) Undefined  
+**Explanation:** Multiple modifications without a sequence point (post-decrement and pre-decrement in same expression) → undefined behavior.
+
+### 17.
+
+```c
+int x = 5;
+printf("%d", x < 3 ? x++ : ++x);
+```
+
+a) 5  
+b) 6  
+c) 7  
+d) 4  
+
+**Answer:** b) 6  
+**Explanation:** Condition `x < 3` is false, so `++x` is evaluated → x becomes 6.
+
+### 18.
+
+```c
+int a = 0, b = 1;
+printf("%d", a || b && a);
+```
+
+a) 0  
+b) 1  
+c) Undefined  
+d) Compilation error  
+
+**Answer:** a) 0  
+**Explanation:** `&&` has higher precedence → `b && a` → 1 && 0 = 0. Then `a || 0` → 0 || 0 = 0.
+
+### 19.
+
+```c
+int a = 7;
+printf("%d", a % 3 * 2);
+```
+
+a) 4  
+b) 2  
+c) 1  
+d) 6  
+
+**Answer:** b) 2  
+**Explanation:** `%` and `*` have same precedence, evaluated left-to-right. `7 % 3 = 1`; `1*2 = 2`.
+
+### 20.
+
+```c
+int a = 1;
+printf("%d", a = 2, a + 3);
+```
+
+a) 1  
+b) 2  
+c) 5  
+d) Error  
+
+**Answer:** d) Error  
+**Explanation:** Too many arguments passed to the printf() function. Number of format specifier is not equal to number of arguments passed.
+
+---
+

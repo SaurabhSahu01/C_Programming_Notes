@@ -14,14 +14,14 @@ In the above code snippet, `=` ( assignment operator ) is an operator, while `x`
 => The operator that works on two operands is called `binary operator`.
 
 In C language, we have many types of operators:  
-a) <span style="color: yellow;">Arithmetic operators</span>  
-b) <span style="color: yellow;">Unary operators</span>  
-c) <span style="color: yellow;">Relational and Equality operators</span>  
-d) <span style="color: yellow;">Logical operators</span>  
-e) <span style="color: yellow;">Assignment operator</span>  
-f) <span style="color: yellow;">Conditional operators</span>  
-g) <span style="color: yellow;">Bitwise operators</span>  
-h) <span style="color: yellow;">Special operators</span>
+a) `Arithmetic operators`  
+b) `Unary operators`  
+c) `Relational and Equality operators`  
+d) `Logical operators`   
+e) `Assignment operator`    
+f) `Conditional operators`  
+g) `Bitwise operators`   
+h) `Special operators`  
 
 Let's learn about each types of the operators one by one.
 
@@ -40,10 +40,9 @@ Format : operand1 `operator` operand2
 => Arithmetic operators are applied on `Numeric operands`. Thus the operands could be `integers`, `floats`, or `characters` ( since characters are internally represented by numeric codes - ASCII values).
 
 <span style="color: crimson; font-weight: 800;">CAUTION</span>  
-<span style="color: crimson; font-weight: 600">(a) While using `modulus operator` ( % ), both the operands must be `integers`. And the second operand `cannot` be `zero`.  We `cannot` use `floats` with `modulus` operator.  </br>
-(b) While using `division operator` ( / ), the `second operator`, i.e. the denominator `cannot` be `zero`.</span>
+<span style="color: crimson; font-weight: 600">(a)</span> While using `modulus operator` ( % ), both the operands must be `integers`. And the second operand `cannot` be `zero`.  We `cannot` use `floats` with `modulus` operator.  </br>
+<span style="color: crimson; font-weight: 600">(b)</span> While using `division operator` ( / ), the `second operator`, i.e. the denominator `cannot` be `zero`.
 
-<span style="color: lightgreen; font-weight: 600;">We will study `Arithmetic Operations` which involves different data types in the `Type Conversion` lecture</span>
 
 ## Practice Problems
 ```c
@@ -117,7 +116,7 @@ In C, there are four relational and two equality operators as given below:
 
 Format : Operand1 `Operator` Operand2
 
-<span style="color: lightgreen; font-weight: 600;">`Note`: It is a `good coding practise` to leave a `whitespace` to the left and right of the operator.</span> 
+<span style="color: lightgreen; font-weight: 600;">NOTE</span> : It is a `good coding practise` to leave a `whitespace` to the left and right of the operator.
 
 ## Practice Problems
 ```c
@@ -169,7 +168,7 @@ void main() {
 
 An expression containing a logical operator returns either 0 (or) 1 depending on the evaluation of the expression to either false or true respectively.  
 
-<span style="color: lightgreen; font-weight: 600;">Note: In C, `false` is represented as `0` (zero) and all `non-zero values` is treated as `true`.</span>  
+<span style="color: lightgreen; font-weight: 600;">NOTE</span> : In C, `false` is represented as `0` (zero) and all `non-zero values` is treated as `true`. 
 
 | Operator | Description  | Meaning                                                                 |
 |----------|--------------|-------------------------------------------------------------------------|
@@ -550,7 +549,51 @@ In the above example, `1111 1010` is not just `250`, since the leftmost bit (MSB
 
 **Note**: `~n = -(n+1)`
 
-> `Left shift` works normallly, but there is a catch with the `right shift operator`.
+# Shift Operators in C
+
+---
+
+## 1. Left Shift (`<<`)
+
+### Rule:
+
+For an integer `x` of width `w` bits, shifting left by `n` positions:
+
+* **Unsigned integers:**
+
+```
+x << n = (x * 2^n) % 2^w
+```
+
+* **Signed integers:**
+
+  * Bitwise effect is same as above.
+  * **Warning:** Overflow is undefined behavior in C.
+
+### Key Points:
+
+* Multiplying by `2^n` is equivalent to left shifting by `n`.
+* Left shift increases the value magnitude.
+* Overflow occurs if the result exceeds the representable range (signed int).
+
+### Examples:
+
+```c
+#include <stdio.h>
+int main() {
+    unsigned int ux = 25;        // binary: 00011001
+    printf("%u\n", ux << 2);  // 100 (00011001 << 2 = 01100100)
+
+    int sx = 1073741825;         // binary: 01000000 00000000 00000001
+    printf("%d\n", sx << 1);  // -2147483646 (overflow in signed int)
+
+    return 0;
+}
+```
+
+---
+
+## 2. Right Shift (`>>`)
 
 There are two kinds of `right shifts` in computer systems:  
 **(A) Logical Right Shift**
@@ -571,9 +614,410 @@ a = -5 → 1111 1011 (2’s complement, 8 bits)
 a >> 1 → 1111 1101 = -3   (sign bit kept as 1)
 ```
 
+### Logical Right Shift (Unsigned Numbers)
+
+```
+x >> n = floor(x / 2^n)
+```
+
+* Fills left bits with **0**.
+* Safe for unsigned integers, no overflow.
+
+### Arithmetic Right Shift (Signed Numbers)
+
+```
+x >> n =
+  x >= 0 ? floor(x / 2^n) : -ceil(|x| / 2^n)
+```
+
+* Preserves the **sign bit** (MSB).
+* Reduces magnitude.
+* No overflow occurs.
+
+### Examples:
+
+```c
+#include <stdio.h>
+int main() {
+    unsigned int ux = 200;       // 11001000
+    printf("%u\n", ux >> 2);  // 50 (00110010)
+
+    int sx = -50;                // 8-bit example: 11001110
+    printf("%d\n", sx >> 2);  // -13 (11110011)
+
+    return 0;
+}
+```
+
+---
+
+## 3. Summary Table
+
+| Operator | Type     | Rule / Formula                   | Notes                         |       |                                  |
+| -------- | -------- | -------------------------------- | ----------------------------- | ----- | -------------------------------- |
+| `<<`     | unsigned | x << n = (x * 2^n) % 2^w         | Overflow wraps modulo 2^w     |       |                                  |
+| `<<`     | signed   | same as unsigned                 | Overflow = undefined behavior |       |                                  |
+| `>>`     | unsigned | x >> n = floor(x / 2^n)          | Logical shift, fills 0        |       |                                  |
+| `>>`     | signed   | x >= 0 ? floor(x / 2^n) : -ceil( \| x \| /2^n) | Arithmetic shift, preserves sign |
+
+---
+
+## 4. Tips for Mental Calculation
+
+1. **Left Shift (`<< n`)** → multiply by `2^n`. Check for overflow if signed.
+2. **Logical Right Shift (`>>`)** → divide by `2^n`, ignore sign.
+3. **Arithmetic Right Shift (`>>`)** → divide by `2^n`, round towards negative infinity for negatives.
+4. **Check MSB** to determine sign after shift for signed numbers.
+
+---
 
 
+# Comma Operator in C
 
 
+## 1. Definition
 
+The **comma operator** (`,`) is a **binary operator** that evaluates two expressions **from left to right** and returns the **value of the right-hand expression**.
 
+**Syntax:**
+
+```c
+result = (expression1, expression2);
+```
+
+* `expression1` is evaluated first, then `expression2`.
+* The **value of the whole expression** is the value of `expression2`.
+* Often used to include **multiple operations in a single statement**.
+
+---
+
+## 2. Key Rules
+
+1. **Evaluation Order:** Always left to right.
+2. **Return Value:** The **last expression's value**.
+3. **Associativity:** Left to right.
+4. **Usage:** Usually inside `for` loops or complex assignments.
+5. **Parentheses:** Needed when used in assignment to ensure correct grouping.
+
+---
+
+## 3. Examples
+
+### Example 1: Simple Assignment
+
+```c
+#include <stdio.h>
+int main() {
+    int a;
+    a = (1, 2, 3);  // parentheses required
+    printf("%d\n", a);  // Output: 3
+    return 0;
+}
+```
+
+* Here, `1` and `2` are evaluated (and discarded), `3` is assigned to `a`.
+
+### Example 2: Without Parentheses
+
+```c
+#include <stdio.h>
+int main() {
+    int a;
+    a = 1, 2, 3;
+    printf("%d\n", a);  // Output: 1
+    return 0;
+}
+```
+
+* `=` has **higher precedence** than `,`. Equivalent to:
+
+```c
+(a = 1), 2, 3;
+```
+
+* So `a` gets `1`.
+
+### Example 3: In `for` Loops
+
+```c
+#include <stdio.h>
+int main() {
+    int i, j;
+    for(i = 0, j = 10; i < 5; i++, j--) {
+        printf("i=%d j=%d\n", i, j);
+    }
+    return 0;
+}
+```
+
+* Multiple initializations and updates using `,` operator.
+* Evaluated left to right.
+
+### Example 4: Function Calls
+
+```c
+#include <stdio.h>
+int f1() { printf("f1\n"); return 1; }
+int f2() { printf("f2\n"); return 2; }
+int main() {
+    int x;
+    x = (f1(), f2());
+    printf("x=%d\n", x);
+    return 0;
+}
+```
+
+* Output:
+
+```
+f1
+f2
+x=2
+```
+
+* `f1()` is executed, result discarded. `f2()` executed, value returned.
+
+---
+
+## 4. Tricky Points
+
+1. **Assignment Precedence:** Parentheses are important.
+
+```c
+int a;
+a = 1, 2; // assigns 1 to a, 2 is discarded
+```
+
+2. **Multiple Side Effects:** Can be used for compact code in loops, but readability suffers.
+3. **Not a Separator:** In variable declarations, `,` separates variables, **not expressions**.
+
+```c
+int a = 1, b = 2; // declaration, not comma operator
+```
+
+4. **Return Values in Expressions:** Useful when only the last expression matters.
+
+---
+
+## 5. Summary Table
+
+| Feature      | Behavior                                                               |
+| ------------ | ---------------------------------------------------------------------- |
+| Operator     | `,` (comma)                                                            |
+| Type         | Binary, evaluates left to right                                        |
+| Returns      | Value of the **rightmost expression**                                  |
+| Common Usage | Multiple expressions in one statement, `for` loop, complex assignments |
+| Precedence   | **Lowest** (assignments bind before comma)                             |
+
+---
+
+### Tips for Students
+
+* Always use parentheses when assigning the result of multiple expressions.
+* Remember **last expression wins**.
+* Left-to-right evaluation allows side effects to execute in order.
+* Do not confuse with comma in **declarations**, which separates variables.   
+
+---      
+</br>
+
+# Precedence and Associativity Table
+
+<table id="tableMain" class="margin-top">
+		<tbody><tr>
+			<th>Precedence level</th>
+			<th>Operator</th>
+	    	<th>Operation</th> 
+	    	<th>Associativity</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>
+				<div class="borderBottom">( )</div>
+				<div class="borderBottom">[ ]</div>
+				<div class="borderBottom">.</div>
+				<div>---&gt;</div>
+			</td>
+	    	<td>
+	    		<div class="borderBottom">Functional cell(or) Parentheses</div>
+	    		<div class="borderBottom">Array subscript</div>
+				<div class="borderBottom">Dot</div>
+				<div>Arrow</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>
+				<div class="borderBottom"><b>!</b></div>
+				<div class="borderBottom">~</div>
+				<div class="borderBottom">-</div>
+				<div class="borderBottom">++</div>
+				<div class="borderBottom">--</div>
+				<div class="borderBottom">&amp;</div>
+				<div class="borderBottom">*</div>
+				<div class="borderBottom">(data_type)</div>
+				<div>sizeof()</div>
+			</td>
+	    	<td>
+	    		<div class="borderBottom">Logical NOT</div>
+	    		<div class="borderBottom">One's compliment</div>
+				<div class="borderBottom">Unary minus</div>
+				<div class="borderBottom">Increment</div>
+				<div class="borderBottom">Decrement</div>
+				<div class="borderBottom">Address of</div>
+				<div class="borderBottom">Indirection</div>
+				<div class="borderBottom">Cast oparator</div>
+				<div>sizeof special operator</div>
+	    	</td> 
+	    	<td>Right to Left</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>
+				<div class="borderBottom">*</div>
+				<div class="borderBottom">/</div>
+				<div>%</div>
+			</td>
+	    	<td>
+	    		<div class="borderBottom">Multiplication</div>
+	    		<div class="borderBottom">Division</div>
+				<div>Modulus</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>
+				<div class="borderBottom">+</div>
+				<div>-</div>	
+			</td>
+	    	<td>
+	    		<div class="borderBottom">Addition</div>
+	    		<div>Subtraction</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>
+				<div class="borderBottom"> &lt;&lt; </div>
+				<div> &gt;&gt; </div>
+			</td>
+	    	<td>
+	    		<div class="borderBottom">Left shift</div>
+	    		<div>Right shift</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td>
+				<div class="borderBottom"> &lt; </div>
+				<div class="borderBottom"> &gt; </div>
+				<div class="borderBottom"> &lt;= </div>
+				<div> &gt;= </div>
+			</td>
+	    	<td>
+	    		<div class="borderBottom">Less than</div>
+	    		<div class="borderBottom">Greater than</div>
+				<div class="borderBottom">Less than or equal to</div>
+				<div>Greater than or equal to</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>
+				<div class="borderBottom"> == </div>
+				<div> != </div>
+			</td>
+	    	<td>
+	    		<div class="borderBottom">Equal to</div>
+	    		<div>Not equal to</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>
+				<div> &amp; </div>
+			</td>
+	    	<td>
+	    		<div>Bitwise AND</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td>
+				<div> ^ </div>
+			</td>
+	    	<td>
+	    		<div>Bitwise XOR</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td>
+				<div> | </div>
+			</td>
+	    	<td>
+	    		<div>Bitwise OR</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>11</td>
+			<td>
+				<div> &amp;&amp; </div>
+			</td>
+	    	<td>
+	    		<div>Logical AND</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>12</td>
+			<td>
+				<div> || </div>
+			</td>
+	    	<td>
+	    		<div>Logical OR</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+		<tr>
+			<td>13</td>
+			<td>
+				<div> ?: </div>
+			</td>
+	    	<td>
+	    		<div>Conditional</div>
+	    	</td> 
+	    	<td>Right to Left</td>
+		</tr>
+		<tr>
+			<td>14</td>
+			<td>
+				<div> = += -= *= /= %= </div>
+				<div>&gt;&gt;= &lt;&lt;== &amp;= ^= |=</div>
+			</td>
+	    	<td>
+	    		<div>Simple and compound assignment</div>
+	    	</td> 
+	    	<td>Right to Left</td>
+		</tr>
+			<tr>
+			<td>15</td>
+			<td>
+				<div> <b>,</b> </div>
+			</td>
+	    	<td>
+	    		<div>Comma</div>
+	    	</td> 
+	    	<td>Left to Right</td>
+		</tr>
+	</tbody>
+</table>

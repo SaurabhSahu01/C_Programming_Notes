@@ -1,23 +1,5 @@
 # Type Conversion in C
 
----
-
-## Table of Contents
-1. [What is Type Conversion?](#what-is-type-conversion)
-2. [Why Type Conversion Matters (in simple words)](#why-type-conversion-matters)
-3. [C Data Types — Quick Overview](#c-data-types)
-4. [Two Kinds of Conversion: Implicit vs Explicit](#two-kinds-of-conversion)
-5. [Conversion Hierarchy (including unsigned types)](#conversion-hierarchy)
-6. [Integer Promotions (detailed)](#integer-promotions)
-7. [Usual Arithmetic Conversions (step-by-step)](#usual-arithmetic-conversions)
-8. [Assignments and Function Calls](#assignments-and-function-calls)
-9. [Common Pitfalls and Rules of Thumb](#common-pitfalls)
-10. [How Casting Works `(type)expr`](#how-casting-works)
-11. [Examples with Explanations](#examples-with-explanations)
-12. [Tricky Questions (40) with Answers & Explanations](#tricky-questions)
-13. [Summary & Best Practices](#summary-and-best-practices)
-
----
 
 ## What is Type Conversion?
 
@@ -28,7 +10,7 @@ In C, conversions happen **automatically** (the compiler does it) or **manually*
 
 ---
 
-## Why Type Conversion Matters (in simple words)
+## Why Type Conversion Matters
 
 - Different types store values differently (integers vs decimals).  
 - When you mix types (like `int + float`) the compiler needs rules to decide how to compute a result.  
@@ -36,7 +18,7 @@ In C, conversions happen **automatically** (the compiler does it) or **manually*
 
 ---
 
-## C Data Types — Quick Overview
+## C Data Types
 
 **Integer types** (store whole numbers):  
 - `char` (often 1 byte)  

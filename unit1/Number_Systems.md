@@ -83,7 +83,7 @@ Hex: 18
 
 ### (a) Decimal → Binary
 ```c
-// Question : Write a C program to print Binary equivalent of a Decimal number in the REVERE Format
+// Question : Write a C program to print Binary equivalent of a Decimal number in the REVERSE Order
 #include <stdio.h>
 int main() {
     int num;

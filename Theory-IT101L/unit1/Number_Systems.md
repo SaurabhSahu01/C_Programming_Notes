@@ -94,7 +94,7 @@ int main() {
     // READ BASICS OF WHILE LOOP
     while(num > 0){
         printf("%d", num%2);
-        num = num/10;
+        num = num/2;
     }
     return 0;
 }

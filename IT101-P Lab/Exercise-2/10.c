@@ -1,51 +1,35 @@
 #include <stdio.h>
 
-int main()
-{
+int main(){
+
     int n;
     scanf("%d", &n);
 
-    int i, j, space, num;
-
-    // Upper half including the middle row
-    for (i = 1; i <= n; i++)
-    {
-        space = n - i;
-        num = 2 * i - 1;
-
-        // Print leading spaces
-        for (j = 0; j < space; j++)
-        {
+    // print the upper half of the diamond
+    for(int i = 1; i <= n; i++){
+        int numberOfElements = 2*i - 1;
+        // print the space
+        for(int k = 1; k <= n - i; k++){
             printf("  ");
         }
-
-        // Print numbers
-        for (j = 1; j <= num; j++)
-        {
+        for(int j = 1; j <= numberOfElements; j++){
             printf("%d ", j);
         }
         printf("\n");
     }
 
-    // Lower half
-    for (i = n - 1; i >= 1; i--)
-    {
-        space = n - i;
-        num = 2 * i - 1;
-
-        // Print leading spaces
-        for (j = 0; j < space; j++)
-        {
+    // print the lower half of the diamond
+    for(int i = n-1; i >= 1; i--){
+        int numberOfElements = 2*i - 1;
+        // print the space
+        for(int k = 1; k <= n - i; k++){
             printf("  ");
         }
-
-        // Print numbers
-        for (j = 1; j <= num; j++)
-        {
+        for(int j = 1; j <= numberOfElements; j++){
             printf("%d ", j);
         }
         printf("\n");
     }
-
+    
     return 0;
 }

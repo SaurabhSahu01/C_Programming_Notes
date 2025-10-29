@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-void main()
+int main()
 {
     // decalre variables here
     int n, i;
@@ -13,10 +13,10 @@ void main()
     scanf("%f", &degree);
     // write code here
     x = degree * (PI / 180); // Convert degrees to radians
-    for (i = 0; i < n; i++)
+    for (i = 1; i <= n; i++)
     {
-        int sign = (i % 2 == 0) ? 1 : -1;
-        int power = 2 * i + 1;
+        int sign = (i % 2 == 0) ? -1 : 1;
+        int power = 2 * i - 1;
 
         // Calculate x^power
         float numerator = 1;
@@ -34,4 +34,6 @@ void main()
 
     printf("The sine value sin(%f) = %f\n", degree, sine);
     printf("The sine value using built-in sin(%f) = %f\n", degree, sin(x));
+
+    return 0;
 }

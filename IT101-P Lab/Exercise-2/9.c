@@ -1,28 +1,47 @@
 #include <stdio.h>
-void main()
-{
-    int n;
+
+int main(){
+    int n; // number of employees
     scanf("%d", &n);
-    float a[n], s = 0;
-    char b[n];
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%f%*c%c", &a[i], &b[i]);
+
+    // array to store the salaries of the employees
+    double salary[n];
+    // array to store the gender of the employees
+    char gender[n];
+
+    for(int i = 0; i < n; i++){
+        scanf("%lf %c", &salary[i], &gender[i]); // reading input in one line
     }
-    for (int i = 0; i < n; i++)
-    {
-        if (b[i] == 'M')
-        {
-            s = a[i] + a[i] * 0.05;
+
+    // logic to calculate the bonus based on gender and salary
+    for(int i = 0; i < n; i++){
+        double sal = salary[i];
+        char gen = gender[i];
+
+        // bonus based on gender
+        if(gen == 'M'){
+            // bonus is 5% if male
+            sal += salary[i]*0.05;
         }
-        else
-        {
-            s = a[i] + a[i] * 0.1;
+        else{
+            // bonus is 10% if female
+            sal += salary[i]*0.1;
         }
-        if (a[i] < 10000)
-        {
-            s = s + a[i] * 0.02;
+
+        // bonus based on salary
+        if(salary[i] < 10000){
+            // 2% bonus if salary is less than 10000
+            sal += salary[i]*0.02;
         }
-        printf("%.2f\n", s);
+
+        // update the salary in the original salary array
+        salary[i] = sal;
     }
+
+    // print the salary
+    for(int i = 0; i < n; i++){
+        printf("%.2lf\n", salary[i]);
+    }
+
+    return 0;
 }

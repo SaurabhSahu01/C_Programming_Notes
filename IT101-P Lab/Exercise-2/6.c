@@ -28,6 +28,7 @@ int main(){
     return 0;
 }
 
+// Method 3
 int main(){
     int n;
     scanf("%d", &n);

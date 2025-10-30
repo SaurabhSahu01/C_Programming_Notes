@@ -1,44 +1,40 @@
 #include <stdio.h>
 
-int main()
-{
-    int rows;
-
-    // Prompt for input
+/**
+ * 
+ * This problem is similar to the previous problem where we had to print the upper half and the lower
+ * half of the diamond pattern.
+ * This question is about printing the upper half of the diamond. The only difference is that this question has 2 spaces instead of 1 space.
+ */
+int main(){
+    int n;
     printf("Enter rows: ");
-    scanf("%d", &rows);
+    scanf("%d", &n);
 
     // Input validation
-    if (rows <= 0)
-    {
+    if(n <= 0){
         printf("Number of rows should be greater than zero.\n");
         return 0;
     }
 
-    // Loop through each row
-    for (int i = 1; i <= rows; i++)
-    {
-        // Print leading spaces for centering
-        for (int space = 1; space <= rows - i; space++)
-        {
-            printf("   ");
+    // print the upper half of the diamond
+    for(int lineNumber = 1; lineNumber <= n; lineNumber++){
+        int numberOfElements = 2*lineNumber - 1;
+        // print the space
+        for(int space = 1; space <= n - lineNumber; space++){
+            printf("   "); // Note we are using 2 spaces after each space
         }
 
-        // Print ascending numbers from 1 to i
-        for (int num = 1; num <= i; num++)
-        {
-            printf("%d  ", num);
-        }
+        int maxNumberInline = lineNumber;
 
-        // Print descending numbers from i - 1 to 1
-        for (int num = i - 1; num >= 1; num--)
-        {
-            printf("%d  ", num);
+        // print the numbers in increasing order
+        for(int number = 1; number <= maxNumberInline; number++){
+            printf("%d  ", number); // Note we are using 2 spaces after every number
         }
-
-        // Move to the next line
+        // print the numbers in decreasing order
+        for(int number = maxNumberInline-1; number >= 1; number--){
+            printf("%d  ", number);
+        }
         printf("\n");
     }
-
-    return 0;
 }
